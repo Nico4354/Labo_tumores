@@ -1,0 +1,46 @@
+<div class="app">
+  <header>
+    <h1>Clasificador de Tumores Cerebrales</h1>
+    <div class="form">
+      <input type="file" accept="image/*" (change)="handleFileChange($event)" />
+      <button (click)="handleSubmit()">Clasificar Imagen</button>
+    </div>
+  </header>
+
+  <main class="content">
+    <section class="left">
+      <div class="card" *ngIf="imageUrl">
+        <h2>Imagen Analizada</h2>
+        <img [src]="imageUrl" alt="MRI" class="preview-img" />
+      </div>
+      <div class="card result-card" *ngIf="prediction">
+        <h2>Resultado</h2>
+        <p class="prediction">{{ prediction }}</p>
+      </div>
+    </section>
+
+    <section class="right">
+      <div class="card" *ngIf="probs">
+        <h2>Gráfico de Probabilidades</h2>
+        <img [src]="graphUrl" alt="Gráfico" class="chart-img" />
+      </div>
+      <div class="card" *ngIf="probs">
+        <h2>Detalles por Clase</h2>
+        <table>
+          <thead>
+            <tr>
+              <th>Clase</th>
+              <th>Probabilidad</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let item of getProbs()">
+              <td>{{ item[0] }}</td>
+              <td>{{ (item[1] * 100).toFixed(2) }}%</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+  </main>
+</div>
